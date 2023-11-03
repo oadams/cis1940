@@ -45,6 +45,12 @@ sumDigits l = sum $ map sumDigit l
 validate :: Integer -> Bool
 validate n = (sumDigits . doubleEveryOther . toDigits) n `mod` 10 == 0
 
+type Peg = String
+type Move = (Peg, Peg)
+hanoi :: Integer -> Peg -> Peg -> Peg ->  [Move]
+hanoi 0 a b c = []
+hanoi n a b c = (hanoi (n-1) a c b) ++ [(a, b)] ++ (hanoi (n-1) c b a)
+
 main :: IO ()
 main = do
     print $ toDigits 1234
@@ -56,3 +62,4 @@ main = do
     print $ sumDigits [16, 7, 12, 5]
     print $ validate 4012888888881881
     print $ validate 4012888888881882
+    print $ hanoi 3 "a" "b" "c"
