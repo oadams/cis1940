@@ -28,8 +28,8 @@ toDigitsRev n = reverse $ toDigits n
 
 doubleEveryOther' :: [Integer] -> [Integer]
 doubleEveryOther' [] = []
-doubleEveryOther' (h:[]) = (h:[])
-doubleEveryOther' (h:h2:xs) = h:2*h2:(doubleEveryOther' xs)
+doubleEveryOther' [h] = [h]
+doubleEveryOther' (h:h2:xs) = h:2*h2:doubleEveryOther' xs
 
 doubleEveryOther :: [Integer] -> [Integer]
 doubleEveryOther l = reverse $ doubleEveryOther' $ reverse l
