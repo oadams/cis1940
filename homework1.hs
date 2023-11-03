@@ -32,7 +32,7 @@ doubleEveryOther' [h] = [h]
 doubleEveryOther' (h:h2:xs) = h:2*h2:doubleEveryOther' xs
 
 doubleEveryOther :: [Integer] -> [Integer]
-doubleEveryOther l = reverse $ doubleEveryOther' $ reverse l
+doubleEveryOther = reverse . doubleEveryOther' . reverse
 
 sumDigit :: Integer -> Integer
 sumDigit n
@@ -43,7 +43,7 @@ sumDigits :: [Integer] -> Integer
 sumDigits l = sum $ map sumDigit l
 
 validate :: Integer -> Bool
-validate n = (sumDigits (doubleEveryOther (toDigits n))) `mod` 10 == 0
+validate n = (sumDigits . doubleEveryOther . toDigits) n `mod` 10 == 0
 
 main :: IO ()
 main = do
