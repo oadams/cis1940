@@ -42,6 +42,9 @@ sumDigit n
 sumDigits :: [Integer] -> Integer
 sumDigits l = sum $ map sumDigit l
 
+validate :: Integer -> Bool
+validate n = (sumDigits (doubleEveryOther (toDigits n))) `mod` 10 == 0
+
 main :: IO ()
 main = do
     print $ toDigits 1234
@@ -51,3 +54,5 @@ main = do
     print $ doubleEveryOther [8, 7, 6, 5]
     print $ doubleEveryOther [1, 2, 3]
     print $ sumDigits [16, 7, 12, 5]
+    print $ validate 4012888888881881
+    print $ validate 4012888888881882
