@@ -45,6 +45,25 @@ inOrder :: MessageTree -> [LogMessage]
 inOrder Leaf = []
 inOrder (Node left msg right) = (inOrder left) ++ [msg] ++ (inOrder right)
 
+{-
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong [] = []
+whatWentWrong ((LogMessage (Error sev) _ s):msgs)
+    | sev >= 50 = [s] ++ (whatWentWrong msgs)
+    | otherwise = whatWentWrong msgs
+whatWentWrong (_:msgs) = whatWentWrong msgs
+-}
+
+wantMessage :: LogMessage -> Bool
+wantMessage (LogMessage (Error sev) _ _) = sev >= 50
+wantMessage _ = False
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong msgs = [s | (LogMessage _ _ s) <- filtered]
+    where ordered = inOrder $ build msgs
+          filtered = [msg | msg <- ordered, wantMessage msg]
+
+
 main :: IO ()
 main = do
     msgs <- take 10 . parse <$> readFile "error.log" 
